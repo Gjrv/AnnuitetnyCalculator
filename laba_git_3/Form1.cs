@@ -15,6 +15,10 @@ namespace laba_git_3
     public partial class Form1 : Form
     {
         List<Shedule> collection = new List<Shedule>();
+        Excel.Application excelApp = new Excel.Application();
+       
+
+
         public class Shedule
         {
             public double _summ { get; set; }
@@ -78,8 +82,6 @@ namespace laba_git_3
                 return;
             }
 
-            var excelApp = new Excel.Application();
-
             excelApp.Visible = true;
 
             excelApp.Workbooks.Add();
@@ -91,6 +93,7 @@ namespace laba_git_3
             workSheet.Cells[1, 3] = "Срок(мес.)";
             workSheet.Cells[1, 4] = "Процентная ставка";
             workSheet.Cells[1, 5] = "Сумма ануитетного платежа";
+            workSheet.Cells[1, 6] = "Сумма переплат по процентам";
             int i = 2;
             foreach(var a in collection)
             {
@@ -99,6 +102,7 @@ namespace laba_git_3
                 workSheet.Cells[i, 3] = a._period;
                 workSheet.Cells[i, 4] = $"{ a._persent}%";
                 workSheet.Cells[i, 5] = $"{ Math.Round(a._monthlyPay(),2) } Р";
+                workSheet.Cells[i, 6] = $"{ Math.Round(a._getPersent(), 2) } Р";
                 i++;
             }
         }
