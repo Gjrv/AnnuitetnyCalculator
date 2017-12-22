@@ -12,6 +12,30 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace laba_git_3
 {
+    public class Shedule
+    {
+        public double _summ { get; set; }
+        public double _persent { get; set; }
+        public int _period { get; set; }
+
+        public double _monthlyPay() => this._summ * (this._persent / 100 / 12 + ((this._persent / 100 / 12) / (Math.Pow((1 + this._persent / 100 / 12), this._period) - 1)));
+        public double _getPersent()
+        {
+            double allPersents = 0;
+            double mounthIPay;
+            double tmpSumm = this._summ;
+            for (int i = 0; i < _period; i++)
+            {
+                mounthIPay = tmpSumm * this._persent / 100 / 12;
+
+                allPersents += mounthIPay;
+
+                tmpSumm -= _monthlyPay() - mounthIPay;
+            }
+            return allPersents;
+        }
+
+    }
     public partial class Form1 : Form
     {
         List<Shedule> collection = new List<Shedule>();
@@ -19,30 +43,7 @@ namespace laba_git_3
        
 
 
-        public class Shedule
-        {
-            public double _summ { get; set; }
-            public double _persent { get; set; }
-            public int _period { get; set; }
-
-            public double _monthlyPay() => this._summ * (this._persent / 100 / 12 + ((this._persent/ 100 / 12) / (Math.Pow((1 + this._persent / 100 / 12), this._period) - 1)));
-            public double _getPersent()
-            {
-                double allPersents = 0;
-                double mounthIPay;
-                double tmpSumm = this._summ;
-                for(int i = 0;i<_period;i++)
-                {
-                    mounthIPay = tmpSumm * this._persent / 100 / 12;
-
-                    allPersents += mounthIPay;
-
-                    tmpSumm -= _monthlyPay() - mounthIPay;
-                }
-                return allPersents;
-            }
-
-        }
+       
         public Form1()
         {
             InitializeComponent();
